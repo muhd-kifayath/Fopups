@@ -9,22 +9,19 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
 
+import androidx.core.content.ContextCompat;
 
 public class ApkInfoExtractor {
 
     Context context1;
 
     public ApkInfoExtractor(Context context2){
-
         context1 = context2;
     }
 
     public List<String> GetAllInstalledApkInfo(){
-
         List<String> ApkPackageName = new ArrayList<>();
-
         Intent intent = new Intent(Intent.ACTION_MAIN,null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED );
@@ -33,14 +30,11 @@ public class ApkInfoExtractor {
 
         for(ResolveInfo resolveInfo : resolveInfoList){
             ActivityInfo activityInfo = resolveInfo.activityInfo;
-
             if(!isSystemPackage(resolveInfo)){
                 ApkPackageName.add(activityInfo.applicationInfo.packageName);
             }
         }
-
         return ApkPackageName;
-
     }
 
     public boolean isSystemPackage(ResolveInfo resolveInfo){
@@ -48,9 +42,7 @@ public class ApkInfoExtractor {
     }
 
     public Drawable getAppIconByPackageName(String ApkTempPackageName){
-
         Drawable drawable;
-
         try{
             drawable = context1.getPackageManager().getApplicationIcon(ApkTempPackageName);
         }
@@ -62,7 +54,6 @@ public class ApkInfoExtractor {
     }
 
     public String GetAppName(String ApkPackageName){
-
         String Name = "";
         ApplicationInfo applicationInfo;
         PackageManager packageManager = context1.getPackageManager();
@@ -72,7 +63,6 @@ public class ApkInfoExtractor {
             if(applicationInfo!=null){
                 Name = (String)packageManager.getApplicationLabel(applicationInfo);
             }
-
         }catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
