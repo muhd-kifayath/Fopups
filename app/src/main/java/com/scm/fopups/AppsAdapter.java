@@ -47,8 +47,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>{
     @Override
     public AppsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view2 = LayoutInflater.from(context1).inflate(R.layout.cardview_layout,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view2);
-        return viewHolder;
+        return new ViewHolder(view2);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>{
         ApkInfoExtractor apkInfoExtractor = new ApkInfoExtractor(context1);
 
         final String ApplicationPackageName = (String) stringList.get(position);
-        final String ApplicationLabelName = apkInfoExtractor.GetAppName(ApplicationPackageName);
+        final String ApplicationLabelName = apkInfoExtractor.getAppName(ApplicationPackageName);
         Drawable drawable = apkInfoExtractor.getAppIconByPackageName(ApplicationPackageName);
 
         viewHolder.textView_App_Name.setText(ApplicationLabelName);

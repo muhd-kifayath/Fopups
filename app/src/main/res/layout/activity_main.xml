@@ -35,7 +35,7 @@
             android:padding="10dp">
 
             <ImageButton
-                android:id="@+id/top_app_1"
+                android:id="@+id/top_app1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
@@ -47,7 +47,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_2"
+                android:id="@+id/top_app2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
@@ -59,7 +59,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_3"
+                android:id="@+id/top_app3"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
@@ -71,7 +71,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_4"
+                android:id="@+id/top_app4"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
@@ -83,7 +83,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_5"
+                android:id="@+id/top_app5"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
@@ -102,7 +102,7 @@
             android:padding="10dp">
 
             <ImageButton
-                android:id="@+id/top_app_6"
+                android:id="@+id/top_app6"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
@@ -112,7 +112,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_7"
+                android:id="@+id/top_app7"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
@@ -122,7 +122,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_8"
+                android:id="@+id/top_app8"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
@@ -132,7 +132,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_9"
+                android:id="@+id/top_app9"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
@@ -142,7 +142,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
             <ImageButton
-                android:id="@+id/top_app_10"
+                android:id="@+id/top_app10"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"

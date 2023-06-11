@@ -20,7 +20,7 @@ public class ApkInfoExtractor {
         context1 = context2;
     }
 
-    public List<String> GetAllInstalledApkInfo(){
+    public List<String> getAllInstalledApkInfo(){
         List<String> ApkPackageName = new ArrayList<>();
         Intent intent = new Intent(Intent.ACTION_MAIN,null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -53,7 +53,7 @@ public class ApkInfoExtractor {
         return drawable;
     }
 
-    public String GetAppName(String ApkPackageName){
+    public String getAppName(String ApkPackageName){
         String Name = "";
         ApplicationInfo applicationInfo;
         PackageManager packageManager = context1.getPackageManager();

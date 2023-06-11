@@ -2,9 +2,9 @@ package com.scm.fopups;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.app.usage.UsageStats;
-import android.app.usage.UsageStatsManager;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -20,8 +20,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences.Editor spForWeekEditor = spForWeek.edit();
 
         //--------------------------------------------------------------------------------------------
-
         //--------------------SHARED PREF-------------------------------------------------------------
 
         SharedPreferences dailyLimit = getSharedPreferences("dailyLimit", Context.MODE_PRIVATE);
@@ -86,18 +85,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHourWeek = findViewById(R.id.hour_week);
         mMinWeek = findViewById(R.id.min_week);
 
-        ib[0] = findViewById(R.id.top_app_1);
-        ib[1] = findViewById(R.id.top_app_2);
-        ib[2] = findViewById(R.id.top_app_3);
-        ib[3] = findViewById(R.id.top_app_4);
-        ib[4] = findViewById(R.id.top_app_5);
-        ib[5] = findViewById(R.id.top_app_6);
-        ib[6] = findViewById(R.id.top_app_7);
-        ib[7] = findViewById(R.id.top_app_8);
-        ib[8] = findViewById(R.id.top_app_9);
-        ib[9] = findViewById(R.id.top_app_10);
+        ib[0] = findViewById(R.id.top_app1);
+        ib[1] = findViewById(R.id.top_app2);
+        ib[2] = findViewById(R.id.top_app3);
+        ib[3] = findViewById(R.id.top_app4);
+        ib[4] = findViewById(R.id.top_app5);
+        ib[5] = findViewById(R.id.top_app6);
+        ib[6] = findViewById(R.id.top_app7);
+        ib[7] = findViewById(R.id.top_app8);
+        ib[8] = findViewById(R.id.top_app9);
+        ib[9] = findViewById(R.id.top_app10);
 
-        UsageStatsManager mUsageStatsManager = (UsageStatsManager)getSystemService(this.USAGE_STATS_SERVICE);
+        AppStats appStats = new AppStats();
         //UsageStats usageStats;
         String PackageName = "Nothing" ;
         long TimeInforground;
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         long howMany = c.getTimeInMillis();
         Log.i("midnighttime",Long.toString(howMany)+" "+Long.toString(time));
 
-        List<UsageStats> stats = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time-10*1000, time);
+        List<UsageStats> stats = appStats.getDailyStatsList(MainActivity.this);
         if(stats != null) {
             SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
             for (UsageStats usageStats : stats) {
@@ -159,21 +158,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Drawable drawable;
         //For Top 10 app list on the basis of daily usage
-        Iterator<Long> iterator = treeMap.descendingKeySet().iterator();
-        for(int i=0; i<=9; i++){
-            Long mapEntry = iterator.next();
-            Log.d("iterator123",mapEntry.toString()+" "+treeMap.get(mapEntry));
-            drawable = apkInfoExtractor.getAppIconByPackageName(treeMap.get(mapEntry));
-            ib[i].setImageDrawable(drawable);
-            ib[i].setOnClickListener(MainActivity.this);
-            top10Apps[i] = treeMap.get(mapEntry);
+        Set<TreeMap.Entry<Long, String> > entries
+                = treeMap.entrySet();
+        int i = 0;
+        for (TreeMap.Entry<Long, String> mapEntry : entries) {
+            Log.d("iterator123",mapEntry.toString()+" "+mapEntry.getKey());
+            drawable = apkInfoExtractor.getAppIconByPackageName(mapEntry.getValue());
+            if(i!=10) {
+                ib[i].setImageDrawable(drawable);
+                ib[i].setOnClickListener(MainActivity.this);
+                top10Apps[i] = mapEntry.getValue();
+                i++;
+            }
+            else if(i==10){
+                i=0;
+                break;
+            }
         }
+//        for(int i=0; i<=9; i++){
+//            mapEntry = iterator.next();
+//            Log.d("iterator123",mapEntry.toString()+" "+mapEntry.getKey());
+//            drawable = apkInfoExtractor.getAppIconByPackageName(mapEntry.getValue());
+//            ib[i].setImageDrawable(drawable);
+//            ib[i].setOnClickListener(MainActivity.this);
+//            top10Apps[i] = mapEntry.getValue();
+//        }
 
         h=0;
         m=0;
         s=0;
 
-        List<UsageStats> statsWeekly = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_WEEKLY, time-10*1000, time);
+        List<UsageStats> statsWeekly = appStats.getWeeklyStatsList(MainActivity.this);
         if(statsWeekly != null) {
             SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
             for (UsageStats usageStats : statsWeekly) {
@@ -272,55 +287,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         Intent i = new Intent(v.getContext(), AppWiseSettingActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        switch (v.getId()){
-            case R.id.top_app_1:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[0]));
-                i.putExtra("package_name",top10Apps[0]);
-                break;
-            case R.id.top_app_2:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[1]));
-                i.putExtra("package_name",top10Apps[1]);
-                break;
-            case R.id.top_app_3:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[2]));
-                i.putExtra("package_name",top10Apps[2]);
-                break;
-            case R.id.top_app_4:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[3]));
-                i.putExtra("package_name",top10Apps[3]);
-                break;
-            case R.id.top_app_5:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[4]));
-                i.putExtra("package_name",top10Apps[4]);
-                break;
-            case R.id.top_app_6:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[5]));
-                i.putExtra("package_name",top10Apps[5]);
-                break;
-            case R.id.top_app_7:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[6]));
-                i.putExtra("package_name",top10Apps[6]);
-                break;
-            case R.id.top_app_8:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[7]));
-                i.putExtra("package_name",top10Apps[7]);
-                break;
-            case R.id.top_app_9:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[8]));
-                i.putExtra("package_name",top10Apps[8]);
-                break;
-            case R.id.top_app_10:
-                i.putExtra("app_name",apkInfoExtractor.GetAppName(top10Apps[9]));
-                i.putExtra("package_name",top10Apps[9]);
-                break;
-            default:
-                break;
+        if (v.getId() == R.id.top_app1) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[0]));
+            i.putExtra("package_name", top10Apps[0]);
         }
+        else if (v.getId() == R.id.top_app2) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[1]));
+            i.putExtra("package_name", top10Apps[1]);
+        }
+        else if (v.getId() == R.id.top_app3) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[2]));
+            i.putExtra("package_name", top10Apps[2]);
+        }
+        else if (v.getId() == R.id.top_app4) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[3]));
+            i.putExtra("package_name", top10Apps[3]);
+        }
+        else if (v.getId() == R.id.top_app5) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[4]));
+            i.putExtra("package_name", top10Apps[4]);
+        }
+        else if (v.getId() == R.id.top_app6) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[5]));
+            i.putExtra("package_name", top10Apps[5]);
+        }
+        else if (v.getId() == R.id.top_app7) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[6]));
+            i.putExtra("package_name", top10Apps[6]);
+        }
+        else if (v.getId() == R.id.top_app8) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[7]));
+            i.putExtra("package_name", top10Apps[7]);
+        }
+        else if (v.getId() == R.id.top_app9) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[8]));
+            i.putExtra("package_name", top10Apps[8]);
+        }
+        else if (v.getId() == R.id.top_app10) {
+            i.putExtra("app_name", apkInfoExtractor.getAppName(top10Apps[9]));
+            i.putExtra("package_name", top10Apps[9]);
+        }
+
         v.getContext().startActivity(i);
     }
 }

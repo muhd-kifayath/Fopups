@@ -136,7 +136,7 @@ public class SensorService extends Service {
             }
 
         }
-        if(!usageEvents.hasNextEvent() && !PackageName.equalsIgnoreCase("com.rstack.dephone")
+        if(!usageEvents.hasNextEvent() && !PackageName.equalsIgnoreCase("com.scm.fopups") && !PackageName.equalsIgnoreCase("nothing")
         ){
             Log.i("BAC123", "PackageName is " + PackageName + "is running");
             try {
