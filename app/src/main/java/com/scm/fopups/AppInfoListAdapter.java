@@ -49,6 +49,7 @@ public class AppInfoListAdapter extends BaseAdapter {
         }
         else {
             listViewHolder = (ViewHolder)convertView.getTag();
+
         }
         listViewHolder.appName.setText(appInfoList.get(position).getAppName());
         listViewHolder.appIcon.setImageDrawable(appInfoList.get(position).getIcon());
@@ -58,6 +59,7 @@ public class AppInfoListAdapter extends BaseAdapter {
         if(appInfoList.get(position).getIsTracked())
             listViewHolder.isTracked.setVisibility(View.VISIBLE);
         else listViewHolder.isTracked.setVisibility(View.INVISIBLE);
+
 
         return convertView;
     }

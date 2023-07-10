@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,7 +25,7 @@ import com.scm.fopups.Alarms;
 import com.scm.fopups.AppInfo;
 import com.scm.fopups.AppInfoActivity;
 import com.scm.fopups.AppInfoListAdapter;
-import com.scm.fopups.DatabaseHelper;
+import com.scm.fopups.TrackedAppHelper;
 import com.scm.fopups.R;
 import com.scm.fopups.TrackedAppInfo;
 import com.scm.fopups.Utils;
@@ -38,8 +37,9 @@ import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
-    private DatabaseHelper dbHelper;
+    private TrackedAppHelper dbHelper;
     private ListView appListView;
+    public List<AppInfo> appInfoList;
     private static int LAUNCH_SETTINGS_ACTIVITY = 1;
 
     private FragmentDashboardBinding binding;
@@ -52,7 +52,7 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        dbHelper = new DatabaseHelper(getContext());
+        dbHelper = new TrackedAppHelper(getContext());
         appListView = root.findViewById(R.id.app_list);
 
         Alarms.resetIsUsageExceededData(getContext());
@@ -65,13 +65,27 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        final List<AppInfo>appInfoList = getAppInfoList();
+        AppInfoListAdapter appInfoListAdapter = new AppInfoListAdapter(getContext(), appInfoList);
+        appListView.setAdapter(appInfoListAdapter);
+
         showAppListAndSetClickListener();
     }
 
-    private List<AppInfo> getAppInfoList() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        final List<AppInfo>appInfoList = getAppInfoList();
+        AppInfoListAdapter appInfoListAdapter = new AppInfoListAdapter(getContext(), appInfoList);
+        appListView.setAdapter(appInfoListAdapter);
+
+    }
+
+    public List<AppInfo> getAppInfoList() {
         PackageManager packageManager = this.getActivity().getPackageManager();
         List<PackageInfo> packageInfoList = packageManager.getInstalledPackages(PackageManager.GET_ACTIVITIES);
         List<AppInfo> appInfoList = new ArrayList<>();
@@ -97,7 +111,7 @@ public class DashboardFragment extends Fragment {
         return appInfoList;
     }
 
-    private void showAppListAndSetClickListener() {
+    public void showAppListAndSetClickListener() {
         final List<AppInfo>appInfoList = getAppInfoList();
         AppInfoListAdapter appInfoListAdapter = new AppInfoListAdapter(getContext(), appInfoList);
         appListView.setAdapter(appInfoListAdapter);

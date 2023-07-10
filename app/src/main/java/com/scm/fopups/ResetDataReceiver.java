@@ -7,7 +7,7 @@ import android.content.Intent;
 public class ResetDataReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        TrackedAppHelper dbHelper = new TrackedAppHelper(context);
         dbHelper.resetAllIsUsageExceeded();
         dbHelper.close();
     }

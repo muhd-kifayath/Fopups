@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BackgroundService extends JobIntentService {
-    private DatabaseHelper dbHelper;
+    private TrackedAppHelper dbHelper;
     private static final String TAG = "BackgroundService";
     private static final int JOB_ID = 1;
 
@@ -27,7 +27,7 @@ public class BackgroundService extends JobIntentService {
 
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
-        dbHelper = new DatabaseHelper(this);
+        dbHelper = new TrackedAppHelper(this);
         List<TrackedAppInfo> trackedAppInfos = dbHelper.getAllRows();
 
         Calendar calendar = Calendar.getInstance();

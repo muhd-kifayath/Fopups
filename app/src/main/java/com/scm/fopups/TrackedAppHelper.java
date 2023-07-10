@@ -1,5 +1,6 @@
 package com.scm.fopups;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,8 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "BEAT_ADDICTION.db";
+public class TrackedAppHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "Fopups.db";
     private static final String TABLE_NAME = "TRACKED_APPS";
     private static final String PACKAGE_NAME = "PACKAGE_NAME";
     private static final String TIME_ALLOWED = "TIME_ALLOWED";
@@ -21,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //prevent notification getting appeared constantly.
     private static final int VERSION = 1;
 
-    public DatabaseHelper(Context context) {
+    public TrackedAppHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
     }
@@ -59,8 +60,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " +TABLE_NAME+ " WHERE " + PACKAGE_NAME + " = ?", new String[]{packageName});
         if(cursor.moveToFirst()) {
-            int timeAllowed = cursor.getInt(cursor.getColumnIndex(TIME_ALLOWED));
-            int isUsageExceeded = cursor.getInt(cursor.getColumnIndex(IS_USAGE_EXCEEDED));
+            @SuppressLint("Range") int timeAllowed = cursor.getInt(cursor.getColumnIndex(TIME_ALLOWED));
+            @SuppressLint("Range") int isUsageExceeded = cursor.getInt(cursor.getColumnIndex(IS_USAGE_EXCEEDED));
             trackedAppInfo = new TrackedAppInfo(packageName, timeAllowed, isUsageExceeded);
         }
         cursor.close();
@@ -73,9 +74,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " +TABLE_NAME, null);
         while(cursor.moveToNext()) {
-            String packageName = cursor.getString(cursor.getColumnIndex(PACKAGE_NAME));
-            int timeAllowed = cursor.getInt(cursor.getColumnIndex(TIME_ALLOWED));
-            int isUsageExceeded = cursor.getInt(cursor.getColumnIndex(IS_USAGE_EXCEEDED));
+            @SuppressLint("Range") String packageName = cursor.getString(cursor.getColumnIndex(PACKAGE_NAME));
+            @SuppressLint("Range") int timeAllowed = cursor.getInt(cursor.getColumnIndex(TIME_ALLOWED));
+            @SuppressLint("Range") int isUsageExceeded = cursor.getInt(cursor.getColumnIndex(IS_USAGE_EXCEEDED));
             trackedAppInfos.add(new TrackedAppInfo(packageName, timeAllowed, isUsageExceeded));
         }
         cursor.close();

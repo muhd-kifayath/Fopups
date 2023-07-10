@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class AppInfoActivity extends AppCompatActivity {
     private static final String TAG = "AppInfoActivity";
     private static final int LAUNCH_SETTINGS_ACTIVITY = 1;
-    private DatabaseHelper dbHelper;
+    private TrackedAppHelper dbHelper;
     private String packageName;
     private String appName;
     private TextView appNameView;
@@ -52,7 +52,7 @@ public class AppInfoActivity extends AppCompatActivity {
         packageName = getIntent().getStringExtra("packageName");
         appName = getIntent().getStringExtra("appName");
 
-        dbHelper = new DatabaseHelper(this);
+        dbHelper = new TrackedAppHelper(this);
 
         appNameView = findViewById(R.id.chart_app_name);
         appIcon = findViewById(R.id.list_app_icon);

@@ -1,6 +1,7 @@
 package com.scm.fopups;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 public class AppInfo implements Comparable<AppInfo>{
     private String appName;
