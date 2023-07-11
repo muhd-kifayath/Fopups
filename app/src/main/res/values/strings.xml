@@ -4,4 +4,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="save">Save</string>
+    <string name="tasks">Tasks</string>
+    <string name="new_task">New Task</string>
 </resources>
