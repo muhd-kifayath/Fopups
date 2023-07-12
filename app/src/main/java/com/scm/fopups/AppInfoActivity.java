@@ -87,8 +87,10 @@ public class AppInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editTrackingInfo();
+                Alarms.scheduleNotification(getApplicationContext(), System.currentTimeMillis());
             }
         });
+
 
         /*chartButton.setOnClickListener(new View.OnClickListener() {
             @Override
