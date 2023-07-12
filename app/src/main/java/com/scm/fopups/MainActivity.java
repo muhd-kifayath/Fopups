@@ -10,26 +10,24 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.scm.fopups.databinding.ActivityMainBinding;
 import com.scm.fopups.ui.todo.ToDoFragment;
-import com.scm.fopups.ui.todo.ToDoViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogCloseListener{
 
     private ActivityMainBinding binding;
 
     TrackedAppHelper dbHelper;
+    ToDoFragment toDoFragment;
     ToDoHandler tdb;
-
 
 
     @Override
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         tdb = new ToDoHandler(getApplicationContext());
         tdb.openDatabase();
-
 
     }
 
@@ -83,4 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void handleDialogClose(DialogInterface dialog) {
+        toDoFragment.taskList = tdb.getAllTasks();
+        Collections.reverse(toDoFragment.taskList);
+        toDoFragment.tasksAdapter.setTasks(toDoFragment.taskList);
+        toDoFragment.tasksAdapter.notifyDataSetChanged();
+    }
 }

@@ -34,14 +34,14 @@ public class ToDoFragment extends Fragment implements DialogCloseListener {
 
     private FragmentTodoBinding binding;
 
+
     private ToDoHandler tdb;
 
     private RecyclerView tasksRecyclerView;
+    public ToDoAdapter tasksAdapter;
     private FloatingActionButton fab;
 
     public List<ToDo> taskList;
-    public ToDoAdapter tasksAdapter;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
