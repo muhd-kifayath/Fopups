@@ -21,12 +21,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DialogCloseListener{
+public class MainActivity extends AppCompatActivity{
 
     private ActivityMainBinding binding;
 
     TrackedAppHelper dbHelper;
-    ToDoFragment toDoFragment;
     ToDoHandler tdb;
 
 
@@ -80,11 +79,4 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     }
 
-    @Override
-    public void handleDialogClose(DialogInterface dialog) {
-        toDoFragment.taskList = tdb.getAllTasks();
-        Collections.reverse(toDoFragment.taskList);
-        toDoFragment.tasksAdapter.setTasks(toDoFragment.taskList);
-        toDoFragment.tasksAdapter.notifyDataSetChanged();
-    }
 }
