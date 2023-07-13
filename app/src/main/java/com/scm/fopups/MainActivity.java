@@ -31,7 +31,6 @@ import com.scm.fopups.API_Calls.RetrofitAPI;
 import com.scm.fopups.databinding.ActivityMainBinding;
 import com.scm.fopups.ui.todo.ToDoFragment;
 
-import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -48,11 +47,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -173,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Extract the generated message from the JSON response
                     gen_message = response.substring(12, (response.length() - 2));
-                    gen_message = StringEscapeUtils.unescapeJava(gen_message);
+                    //gen_message = StringEscapeUtils.unescapeJava(gen_message);
                 } else {
                     gen_message = "API request failed with response code: " + responseCode;
                 }
