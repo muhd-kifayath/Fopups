@@ -104,25 +104,27 @@ public class MainActivity extends AppCompatActivity {
                 //post_data(taskStrings.toString());
                 Log.d("Notify", taskStrings.toString());
                 int max = taskStrings.size();
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "Fopup-Notification");
-                builder.setContentTitle("Limit Exceeded");
-                int b = (int)(Math.random()*(max)+0);
-                builder.setContentText(taskStrings.get(b));
-                builder.setSmallIcon(R.drawable.warning);
-                builder.setAutoCancel(true);
+                if(max>0) {
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "Fopup-Notification");
+                    builder.setContentTitle("Limit Exceeded");
+                    int b = (int) (Math.random() * (max) + 0);
+                    builder.setContentText(taskStrings.get(b));
+                    builder.setSmallIcon(R.drawable.warning);
+                    builder.setAutoCancel(true);
 
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    managerCompat.notify(1, builder.build());
                 }
-                managerCompat.notify(1, builder.build());
 
             }
         };
