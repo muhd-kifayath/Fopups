@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -39,10 +41,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"/>
-        <service
-            android:name=".BackgroundService"
+        <receiver
+            android:name=".NotificationReceiver"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="NOTIFICATION_SERVICE" />
+            </intent-filter>
+        </receiver>
 
         <receiver android:name=".BootBroadcastReceiver"
             android:exported="true">
@@ -51,7 +57,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".ResetDataReceiver" />
-        <receiver android:name=".NotificationReceiver" />
     </application>
 
 </manifest>
